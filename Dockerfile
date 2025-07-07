@@ -24,5 +24,4 @@ services:
     env_file:
       - .env
 
-volumes:
-  db_data:
+
