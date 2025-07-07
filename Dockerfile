@@ -1,27 +1,23 @@
-version: '3.9'
+# Use official Python image
+FROM python:3.10-slim
 
-services:
-  db:
-    image: mysql:8
-    container_name: mysql-db
-    restart: always
-    env_file:
-      - .env
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
+# Environment settings
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    env_file:
-      - .env
+# Set working directory
+WORKDIR /app
 
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
+# Copy project code
+COPY . .
+
+# Expose the port Django runs on
+EXPOSE 8000
+
+# Start server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
