@@ -50,3 +50,28 @@ env\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
+## ✅ Challenges Faced
+JSON was double-wrapped in a dictionary format ({"0": {...}, "1": {...}})
+
+Fixed decoding by parsing key-value pairs instead of assuming a list
+
+mysqlclient failed on Windows, used PyMySQL as drop-in replacement
+
+Cleaned up recipes missing titles with a safe validation step
+
+## 📬 Submission
+All source code, JSON loader, frontend, and documentation included in this repo.
+
+
+---
+
+## ✅ 5. Add `requirements.txt` (Optional but great!)
+
+Run:
+
+```bash
+pip freeze > requirements.txt
+✅ This helps reviewers set up the environment fast.
+
+
