@@ -1,0 +1,31 @@
+<!-- templates/recipe_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Recipes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h1 class="mb-4">📋 All Recipes</h1>
+
+    {% if recipes %}
+      <ul class="list-group mb-4">
+        {% for recipe in recipes %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ recipe.title }}</strong><br>
+              <small class="text-muted">{{ recipe.cuisine }}</small>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="alert alert-info">No recipes found.</div>
+    {% endif %}
+
+    <a href="{% url 'recipe_create' %}" class="btn btn-primary">➕ Add New Recipe</a>
+  </div>
+</body>
+</html>
