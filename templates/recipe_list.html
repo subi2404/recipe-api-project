@@ -8,24 +8,64 @@
 </head>
 <body class="bg-light">
   <div class="container py-5">
-    <h1 class="mb-4">📋 All Recipes</h1>
+    <h1 class="mb-4">📋 All Recipes ({{ recipes.paginator.count }})</h1>
 
     {% if recipes %}
-      <ul class="list-group mb-4">
-        {% for recipe in recipes %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-              <strong>{{ recipe.title }}</strong><br>
-              <small class="text-muted">{{ recipe.cuisine }}</small>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Cuisine</th>
+              <th>Ingredients</th>
+              <th>Instructions</th>
+              <th>Prep Time</th>
+              <th>Cook Time</th>
+              <th>Total Time</th>
+              <th>Serves</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for recipe in recipes %}
+              <tr>
+                <td>{{ recipe.id }}</td>
+                <td>{{ recipe.title }}</td>
+                <td>{{ recipe.cuisine }}</td>
+                <td style="white-space: pre-line;">{{ recipe.ingredients }}</td>
+                <td style="white-space: pre-line;">{{ recipe.instructions }}</td>
+                <td>{{ recipe.prep_time }}</td>
+                <td>{{ recipe.cook_time }}</td>
+                <td>{{ recipe.total_time }}</td>
+                <td>{{ recipe.serves }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination Controls -->
+      <nav>
+        <ul class="pagination justify-content-center">
+          {% if recipes.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">« First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ recipes.previous_page_number }}">‹ Prev</a></li>
+          {% endif %}
+
+          <li class="page-item disabled"><a class="page-link">Page {{ recipes.number }} of {{ recipes.paginator.num_pages }}</a></li>
+
+          {% if recipes.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ recipes.next_page_number }}">Next ›</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ recipes.paginator.num_pages }}">Last »</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+
     {% else %}
       <div class="alert alert-info">No recipes found.</div>
     {% endif %}
 
-    <a href="{% url 'recipe_create' %}" class="btn btn-primary">➕ Add New Recipe</a>
+    <a href="{% url 'recipe_create' %}" class="btn btn-primary mt-3">➕ Add New Recipe</a>
   </div>
 </body>
 </html>
